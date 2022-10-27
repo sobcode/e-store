@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+  <servlet>
+      <servlet-name>Controller</servlet-name>
+      <servlet-class>com.finalVariant.OnlineStore.controller.Controller</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+      <servlet-name>Controller</servlet-name>
+      <url-pattern>/app/*</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+      <filter-name>EncodingFilter</filter-name>
+      <filter-class>com.finalVariant.OnlineStore.controller.filter.EncodingFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>EncodingFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+      <filter-name>LocalizationFilter</filter-name>
+      <filter-class>com.finalVariant.OnlineStore.controller.filter.LocalizationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>LocalizationFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+      <filter-name>AuthFilter</filter-name>
+      <filter-class>com.finalVariant.OnlineStore.controller.filter.AuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>AuthFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+      <filter-name>UpdateUserFilter</filter-name>
+      <filter-class>com.finalVariant.OnlineStore.controller.filter.UpdateUserFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>UpdateUserFilter</filter-name>
+      <url-pattern>/app/user/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+      <filter-name>BlockFilter</filter-name>
+      <filter-class>com.finalVariant.OnlineStore.controller.filter.BlockFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>BlockFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <welcome-file-list>
+      <welcome-file>app/guest/mainPage</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+      <error-code>500</error-code>
+      <location>/WEB-INF/jsp/errorPage.jsp</location>
+    </error-page>
+
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/jsp/pageNotFound.jsp</location>
+  </error-page>
+
+</web-app>
