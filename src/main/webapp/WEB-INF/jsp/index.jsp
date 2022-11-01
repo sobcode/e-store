@@ -18,6 +18,7 @@
     <%@include file="includes/navbar.jsp"%>
 </header>
 <main>
+    <img class="card-img-top" src="<c:url value="/product-image/nature.jpeg"/>">
     <div class="container">
         <div class="d-flex justify-content-start card-header my-3">
             <div><fmt:message key="all_products" bundle="${bundle}"/></div>
@@ -89,7 +90,7 @@
             <c:forEach items="${products}" var="product">
                 <dic class="col-md-3 my-3">
                     <div class="card w-100">
-                        <img class="card-img-top" src="<c:url value="/product-image/images.jpg"/>"
+                        <img class="card-img-top" src="<c:url value="/product-image/${product.img}"/>"
                             alt="Product image" style="max-height: 300px;
                                                         min-height: 300px;
                                                         height: auto;

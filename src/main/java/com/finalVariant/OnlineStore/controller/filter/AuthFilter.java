@@ -22,18 +22,18 @@ public class AuthFilter implements Filter {
         String userRole = user == null ? "guest" : user.getRole().toString().toLowerCase(Locale.ROOT);
 
         String roleAccess = "guest";
-        if(!httpRequest.getRequestURI().contains("product-image")) {
-            Matcher m = Pattern.compile("(?<=\\/app\\/).*?(?=\\/)").matcher(httpRequest.getRequestURI()); // lookbehind/lookahead
 
-            if (m.find()) {
-                roleAccess = m.group();
-            }
+        Matcher m = Pattern.compile("(?<=\\/app\\/).*?(?=\\/)").matcher(httpRequest.getRequestURI()); // lookbehind/lookahead
 
-            if (!roleAccess.equals(userRole) && !httpRequest.getRequestURI().equals("")) {
-                httpRequest.getRequestDispatcher(JSPPageConstants.AUTH_ERROR_PAGE).forward(httpRequest, httpResponse);
-                return;
-            }
+        if (m.find()) {
+            roleAccess = m.group();
         }
+
+        if (!userRole.equals(roleAccess) && !httpRequest.getRequestURI().equals("") && !roleAccess.equals("product-image")) {
+            httpRequest.getRequestDispatcher(JSPPageConstants.AUTH_ERROR_PAGE).forward(httpRequest, httpResponse);
+            return;
+        }
+
         filterChain.doFilter(servletRequest, servletResponse);
     }
 }

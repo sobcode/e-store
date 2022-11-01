@@ -21,12 +21,15 @@ import com.finalVariant.OnlineStore.controller.command.userCommand.cartCommands.
 import com.finalVariant.OnlineStore.controller.command.userCommand.orderCommands.CancelRegisteredOrder;
 import com.finalVariant.OnlineStore.controller.command.userCommand.orderCommands.OrdersPage;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,10 +72,29 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         String path = req.getRequestURI();
-        /*if(path.contains("product-image")){
-            resp.sendRedirect(path);
-            return;
-        }*/
+        if(path.contains("product-image")){
+            ServletContext sc = getServletContext();
+            String img = path.replaceAll(".*/app/.*/", "");
+            try (InputStream is = sc.getResourceAsStream("/product-image/" + img)) {
+                OutputStream os = resp.getOutputStream();
+
+                if (is == null) {
+                    resp.setContentType("text/plain");
+                    os.write("Failed to send image".getBytes());
+                } else {
+
+                    resp.setContentType("image/jpeg");
+
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+
+                    while ((bytesRead = is.read(buffer)) != -1) {
+
+                        os.write(buffer, 0, bytesRead);
+                    }
+                }
+            }
+        }
 
         path = path.replaceAll(".*/app/.*/", "");
 
