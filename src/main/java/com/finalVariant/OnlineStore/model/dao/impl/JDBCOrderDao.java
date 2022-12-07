@@ -162,7 +162,7 @@ public class JDBCOrderDao implements OrderDao {
         try(PreparedStatement pstmt = connection.prepareStatement(SQLConstants.FIND_ALL_ORDERS_FOR_USER)){
             pstmt.setLong(1, user.getId());
             try(ResultSet rs = pstmt.executeQuery()){
-                if(rs.next()){
+                while(rs.next()){
                     orders.add(orderMapper.extractFromResultSet(rs));
                 }
             }

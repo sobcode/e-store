@@ -3,6 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+  <servlet>
+    <servlet-name>ImagesServlet</servlet-name>
+    <servlet-class>com.finalVariant.OnlineStore.controller.ImagesServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ImagesServlet</servlet-name>
+    <url-pattern>/app/product-image/*</url-pattern>
+  </servlet-mapping>
+
   <servlet>
       <servlet-name>Controller</servlet-name>
       <servlet-class>com.finalVariant.OnlineStore.controller.Controller</servlet-class>
@@ -76,5 +87,13 @@
     <error-code>404</error-code>
     <location>/WEB-INF/jsp/pageNotFound.jsp</location>
   </error-page>
+
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <el-ignored>false</el-ignored>
+      <default-content-type>text/html;charset=UTF-8</default-content-type>
+    </jsp-property-group>
+  </jsp-config>
 
 </web-app>

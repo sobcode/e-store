@@ -62,6 +62,11 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println(req.getRequestURI());
+        //if(req.getRequestURI().contains("/product-image/")){
+        //super.doGet(req, resp);
+         //   return;
+       // }
         processRequest(req, resp);
     }
 
@@ -72,39 +77,20 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         String path = req.getRequestURI();
-        if(path.contains("product-image")){
-            ServletContext sc = getServletContext();
-            String img = path.replaceAll(".*/app/.*/", "");
-            try (InputStream is = sc.getResourceAsStream("/product-image/" + img)) {
-                OutputStream os = resp.getOutputStream();
+        //System.out.println(path);
 
-                if (is == null) {
-                    resp.setContentType("text/plain");
-                    os.write("Failed to send image".getBytes());
-                } else {
+        if(!path.contains("product-image")) {
+            path = path.replaceAll(".*/app/.*/", "");
 
-                    resp.setContentType("image/jpeg");
-
-                    byte[] buffer = new byte[1024];
-                    int bytesRead;
-
-                    while ((bytesRead = is.read(buffer)) != -1) {
-
-                        os.write(buffer, 0, bytesRead);
-                    }
-                }
+            Command command = commands.getOrDefault(path, r -> "mainPage");
+            String page = command.execute(req);
+            //System.out.println(page);
+            if (page.contains("redirect:")) {
+                resp.sendRedirect(page.replace("redirect:", ""));
+            } else {
+                req.getRequestDispatcher(page).forward(req, resp);
             }
         }
 
-        path = path.replaceAll(".*/app/.*/", "");
-
-        Command command = commands.getOrDefault(path, r -> "mainPage");
-        String page = command.execute(req);
-
-        if(page.contains("redirect:")){
-            resp.sendRedirect(page.replace("redirect:", ""));
-        } else {
-            req.getRequestDispatcher(page).forward(req, resp);
-        }
     }
 }

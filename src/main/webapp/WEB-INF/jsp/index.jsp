@@ -1,12 +1,8 @@
 <%@include file="includes/standartVariables.jsp"%>
+<%@taglib prefix="tf" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+    <tf:bootstrap/>
     <title><fmt:message key="main_page" bundle="${bundle}"/></title>
     <style>
         <%@include file="/WEB-INF/css/main.css"%>
@@ -15,10 +11,11 @@
 <body>
 
 <header>
-    <%@include file="includes/navbar.jsp"%>
+    <tf:navbar/>
 </header>
 <main>
-    <img class="card-img-top" src="<c:url value="/product-image/nature.jpeg"/>">
+    <img class="card-img-top" src="<c:url value="trainers.png"/>">
+    <img src="trainers.png">
     <div class="container">
         <div class="d-flex justify-content-start card-header my-3">
             <div><fmt:message key="all_products" bundle="${bundle}"/></div>
