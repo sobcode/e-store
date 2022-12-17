@@ -14,8 +14,6 @@
     <tf:navbar/>
 </header>
 <main>
-    <img class="card-img-top" src="<c:url value="trainers.png"/>">
-    <img src="trainers.png">
     <div class="container">
         <div class="d-flex justify-content-start card-header my-3">
             <div><fmt:message key="all_products" bundle="${bundle}"/></div>

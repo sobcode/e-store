@@ -1,8 +1,6 @@
 package com.finalVariant.OnlineStore.controller.listener;
 
-import com.finalVariant.OnlineStore.model.dao.DaoFactory;
 import com.finalVariant.OnlineStore.model.dao.impl.ConnectionPoolHolder;
-import com.finalVariant.OnlineStore.model.dao.impl.JDBCDaoFactory;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -11,6 +9,13 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * This listener checks accessibility to the database.
+ *
+ * @author Artem Sobko
+ * @version 1.0
+ * @since 07.12.2022
+ */
 @WebListener
 public class ConnectionListener implements ServletContextListener {
     @Override

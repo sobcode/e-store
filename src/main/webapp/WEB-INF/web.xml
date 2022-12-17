@@ -4,15 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-  <servlet>
-    <servlet-name>ImagesServlet</servlet-name>
-    <servlet-class>com.finalVariant.OnlineStore.controller.ImagesServlet</servlet-class>
-  </servlet>
 
-  <servlet-mapping>
-    <servlet-name>ImagesServlet</servlet-name>
-    <url-pattern>/app/product-image/*</url-pattern>
-  </servlet-mapping>
 
   <servlet>
       <servlet-name>Controller</servlet-name>
@@ -21,7 +13,9 @@
 
     <servlet-mapping>
       <servlet-name>Controller</servlet-name>
-      <url-pattern>/app/*</url-pattern>
+      <url-pattern>/app/admin/*</url-pattern>
+      <url-pattern>/app/guest/*</url-pattern>
+      <url-pattern>/app/user/*</url-pattern>
     </servlet-mapping>
 
     <filter>

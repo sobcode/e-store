@@ -33,9 +33,16 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/")
+/**
+ * This servlet handles all application URLs except images. It takes the required command from the request URI
+ * (or default "mainPage") and redirects it for further processing.
+ *
+ * @author Artem Sobko
+ * @version 1.0
+ * @since 07.12.2022
+ */
 public class Controller extends HttpServlet {
-    private Map<String, Command> commands = new HashMap<>();
+    private final Map<String, Command> commands = new HashMap<>();
 
     @Override
     public void init() {
@@ -62,11 +69,6 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req.getRequestURI());
-        //if(req.getRequestURI().contains("/product-image/")){
-        //super.doGet(req, resp);
-         //   return;
-       // }
         processRequest(req, resp);
     }
 
@@ -77,19 +79,17 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         String path = req.getRequestURI();
-        //System.out.println(path);
 
-        if(!path.contains("product-image")) {
-            path = path.replaceAll(".*/app/.*/", "");
+        path = path.replaceAll(".*/app/.*/", "");
 
-            Command command = commands.getOrDefault(path, r -> "mainPage");
-            String page = command.execute(req);
-            //System.out.println(page);
-            if (page.contains("redirect:")) {
-                resp.sendRedirect(page.replace("redirect:", ""));
-            } else {
-                req.getRequestDispatcher(page).forward(req, resp);
-            }
+        Command command = commands.getOrDefault(path,
+                (r) -> "mainPage");
+        String page = command.execute(req);
+
+        if (page.contains("redirect:")) {
+            resp.sendRedirect(page.replace("redirect:", ""));
+        } else {
+            req.getRequestDispatcher(page).forward(req, resp);
         }
 
     }

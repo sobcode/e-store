@@ -24,6 +24,6 @@
     </c:otherwise>
 </c:choose>
 
-<c:set var="url" value="${pageContext.request.contextPath}/${role}"/>
+<c:set var="url" value="${pageContext.request.contextPath}/app/${role}"/>
 
 

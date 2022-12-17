@@ -8,6 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * This filter prevents blocked users from accessing the account.
+ *
+ * @author Artem Sobko
+ * @version 1.0
+ * @since 07.12.2022
+ */
 public class BlockFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

@@ -14,12 +14,6 @@ import java.util.List;
 public class OrdersManagePage implements Command {
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
-        /*HashMap<User, List<Order>> usersToOrders = new HashMap<>();
-        List<User> users = adminService.getAllUsers();
-
-        for(User user : users){
-            usersToOrders.put(user, adminService.getAllOrdersForUser(user));
-        }*/
         List<Order> usersToOrders = adminService.getAllOrders();
 
         request.setAttribute("usersToOrders", usersToOrders);

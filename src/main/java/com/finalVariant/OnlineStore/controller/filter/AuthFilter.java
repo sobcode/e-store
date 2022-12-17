@@ -11,6 +11,13 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * This filter prevents from accessing the page which should not be accessible for a certain user.
+ *
+ * @author Artem Sobko
+ * @version 1.0
+ * @since 07.12.2022
+ */
 public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
