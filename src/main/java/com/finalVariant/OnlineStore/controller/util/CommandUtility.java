@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -83,23 +82,31 @@ public class CommandUtility {
         return (List<Order>)session.getAttribute("cart");
     }
 
+    /**
+     * This method is used to extract product from the form which the admin fills in while adding products.
+     * The Apache Commons FileUpload is used here.
+     *
+     * @param request This is a request with uploaded items for a new product.
+     * @param userService With the help of this parameter we can get the required elements from the DB by id.
+     * @return the new product wrapped in an {@link Optional}
+     */
     public static Optional<Product> extractProductFromForm(HttpServletRequest request, UserService userService){
-        final int MAX_MEMORY_SIZE = 1024 * 1024 * 6;  // 2 MB
-        final int MAX_REQUEST_SIZE = 1024 * 1024 * 3;  // 1 MB
+        final int MAX_MEMORY_SIZE = 1024 * 1024 * 6;  // 6 MB
+        final int MAX_REQUEST_SIZE = 1024 * 1024 * 3;  // 3 MB
 
         DiskFileItemFactory factory = new DiskFileItemFactory();
-        factory.setSizeThreshold(MAX_MEMORY_SIZE);
+        factory.setSizeThreshold(MAX_MEMORY_SIZE); // maximum size that will be stored in memory
 
         String uploadFolder = request.getServletContext().getRealPath("").replaceAll("e-store.*", "") +
                 "e-store\\src\\main\\webapp\\product-image";
 
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        upload.setSizeMax(MAX_REQUEST_SIZE);
+        ServletFileUpload upload = new ServletFileUpload(factory); // create a new file upload handler
+        upload.setSizeMax(MAX_REQUEST_SIZE); // maximum file size to be uploaded
 
         Product product;
 
         try{
-            List<FileItem> items = upload.parseRequest(request);
+            List<FileItem> items = upload.parseRequest(request); // parse the request to get file items
 
             int categoryId = Integer.parseInt(items.get(0).getString());
             int colorId = Integer.parseInt(items.get(1).getString());
@@ -123,6 +130,13 @@ public class CommandUtility {
         return Optional.of(product);
     }
 
+    /**
+     * This method is used to load the product image to "product-image" folder.
+     * Firstly find not form field item, then loads it to the necessary folder.
+     *
+     * @param uploadFolder The folder where the image should be uploaded.
+     * @param items All items parsed from the sent request.
+     */
     private static void loadFilesToDirectory(String uploadFolder, List<FileItem> items) throws Exception{
         for(FileItem item : items){
             if(!item.isFormField()){

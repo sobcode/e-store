@@ -107,7 +107,6 @@
                                 </form>
                             </div>
                         </div>
-
                     </div>
                 </dic>
             </c:forEach>
